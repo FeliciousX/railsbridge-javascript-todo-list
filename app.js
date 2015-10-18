@@ -22,6 +22,7 @@ loadRequest.done(function(data) {
     var itemsData = data.items;
 
     itemsData.forEach(function(itemData) {
+        console.log('loading', itemData);
         addItemToPage(itemData);
     });
 
@@ -30,7 +31,6 @@ loadRequest.done(function(data) {
         var isItemCompleted = item.hasClass('completed');
         var itemId = item.attr('data-id');
         var description = item.find('.description').text();
-        console.log('desc', description);
 
         var updateRequest = $.ajax({
             type: 'PUT',
@@ -39,7 +39,7 @@ loadRequest.done(function(data) {
         });
 
         updateRequest.done(function(data) {
-            console.log(data);
+            console.log('updated', data);
         });
     });
 });
@@ -54,6 +54,7 @@ $('#add-form').submit(function(event) {
     });
 
     creationRequest.done(function(item) {
+        console.log('added', item);
         addItemToPage(item);
         $('#create').val('');
     });
@@ -89,7 +90,7 @@ $('#list').on('click', '.delete-button', function(event) {
     });
 
     deleteRequest.done(function(itemData) {
-        console.log(itemData);
+        console.log('deleted', itemData);
         item.remove();
     });
 });
