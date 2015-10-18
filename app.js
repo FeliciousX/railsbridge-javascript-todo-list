@@ -24,6 +24,24 @@ loadRequest.done(function(data) {
     itemsData.forEach(function(itemData) {
         addItemToPage(itemData);
     });
+
+    $('.description').on('blur', function(event) {
+        var item = $(event.target).parent();
+        var isItemCompleted = item.hasClass('completed');
+        var itemId = item.attr('data-id');
+        var description = item.find('.description').text();
+        console.log('desc', description);
+
+        var updateRequest = $.ajax({
+            type: 'PUT',
+            url: 'http://listalous.herokuapp.com/lists/FeliciousX/items/' + itemId,
+            data: { description: description, completed: isItemCompleted }
+        });
+
+        updateRequest.done(function(data) {
+            console.log(data);
+        });
+    });
 });
 
 $('#add-form').submit(function(event) {
